@@ -22,11 +22,22 @@ class LeakyReLU(ActivationFunction):
     
 class Sigmoid(ActivationFunction):
     def activate(self, inputs):
-        return 1 / (1 + np.exp(-inputs))
+        # numerically stable sigmoid
+        out = np.empty_like(inputs)
+        pos = inputs >= 0
+        neg = ~pos
+        out[pos] = 1 / (1 + np.exp(-inputs[pos]))
+        exp_x = np.exp(inputs[neg])            # safe because inputs[neg] < 0
+        out[neg] = exp_x / (1 + exp_x)
+        return out
+        # alternative implementation:
+        # return 1 / (1 + np.exp(-inputs))
 
 class Tanh(ActivationFunction):
     def activate(self, inputs):
-        return (np.exp(inputs) - np.exp(-inputs)) / (np.exp(inputs) + np.exp(-inputs))
+        return np.tanh(inputs)
+        # numpy.tanh is more numerically stable than the alternative implementation below:
+        # return (np.exp(inputs) - np.exp(-inputs)) / (np.exp(inputs) + np.exp(-inputs))
     
 class Softmax(ActivationFunction):
     def activate(self, inputs):
