@@ -15,11 +15,15 @@ class NeuralNetwork:
 
 def main():
     nn = NeuralNetwork([
-        DenseLayer(4, 8, ReLU()),
-        DenseLayer(8, 3, Softmax())
+        DenseLayer(input_size=8, output_size=4, activation_function=ReLU()),
+        DenseLayer(input_size=4, output_size=2, activation_function=Softmax())
     ])
+    
+    print(nn.layers[0].weights.shape)
+    print(nn.layers[1].weights.shape)
 
-    x = np.random.randn(4, 5)  # 5 examples, 4 features each
+    x = np.random.randn(8, 5)  # 5 examples, 8 features each
+    print(x.shape)
     output = nn.forward_propagate(x)
     print(output)
 

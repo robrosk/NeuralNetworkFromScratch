@@ -27,9 +27,11 @@ class Sigmoid(ActivationFunction):
 class Tanh(ActivationFunction):
     def activate(self, inputs):
         return (np.exp(inputs) - np.exp(-inputs)) / (np.exp(inputs) + np.exp(-inputs))
-
+    
 class Softmax(ActivationFunction):
     def activate(self, inputs):
-        exp_shift = inputs - np.max(inputs, axis=1, keepdims=True)
-        return np.exp(inputs) / np.sum(np.exp(inputs))
+        # inputs: (C, B); softmax over classes (axis=0)
+        shifted = inputs - np.max(inputs, axis=0, keepdims=True)
+        exps = np.exp(shifted)
+        return exps / np.sum(exps, axis=0, keepdims=True)
 
