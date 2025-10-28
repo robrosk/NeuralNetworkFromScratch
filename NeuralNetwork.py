@@ -1,12 +1,12 @@
-from DenseLayer import DenseLayer
+from Layers import Layer, DenseLayer
 from ActivationFunctions import ReLU, Softmax
 import numpy as np
 
 class NeuralNetwork:
-    def __init__(self, layers):
+    def __init__(self, layers: list[Layer]):
         self.layers = layers
 
-    def forward_propagate(self, x):
+    def forward_propagate(self, x: np.ndarray) -> np.ndarray:
         for layer in self.layers:
             x = layer.forward(x)
 
