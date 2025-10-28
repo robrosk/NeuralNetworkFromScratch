@@ -4,7 +4,7 @@ import numpy as np
 class DenseLayer:
     def __init__(self, input_size, output_size, activation_function):
         self.weights = 0.01 * np.random.randn(output_size, input_size)
-        # R in input_size x output_size
+        # R in output_size x input_size
         self.biases = np.zeros((output_size, 1))
         self.activation_function = activation_function
         

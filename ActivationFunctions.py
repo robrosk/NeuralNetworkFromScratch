@@ -30,7 +30,7 @@ class Tanh(ActivationFunction):
     
 class Softmax(ActivationFunction):
     def activate(self, inputs):
-        # inputs: (C, B); softmax over classes (axis=0)
+        # softmax over classes (axis=0 aka along the columns)
         shifted = inputs - np.max(inputs, axis=0, keepdims=True)
         exps = np.exp(shifted)
         return exps / np.sum(exps, axis=0, keepdims=True)
